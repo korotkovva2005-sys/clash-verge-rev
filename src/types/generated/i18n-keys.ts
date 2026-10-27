@@ -359,6 +359,7 @@ export const translationKeys = [
   'rules.page.actions.enableAll',
   'rules.page.actions.disableAll',
   'rules.page.actions.closeConnections',
+  'rules.page.groups.other',
   'rules.page.title',
   'rules.feedback.notifications.provider.updateSuccess',
   'rules.feedback.notifications.provider.updateFailed',

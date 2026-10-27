@@ -13,6 +13,9 @@
       "disableAll": "Disable All",
       "closeConnections": "Close All Connections"
     },
+    "groups": {
+      "other": "Other"
+    },
     "title": "Rules"
   },
   "feedback": {

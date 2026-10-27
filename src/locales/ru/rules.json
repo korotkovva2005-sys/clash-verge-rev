@@ -13,6 +13,9 @@
       "disableAll": "Выключить все",
       "closeConnections": "Закрыть все соединения"
     },
+    "groups": {
+      "other": "Прочее"
+    },
     "title": "Правила"
   },
   "feedback": {

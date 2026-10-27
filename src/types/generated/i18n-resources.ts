@@ -685,6 +685,9 @@ export interface TranslationResources {
           disableAll: string
           enableAll: string
         }
+        groups: {
+          other: string
+        }
         provider: {
           actions: {
             update: string
