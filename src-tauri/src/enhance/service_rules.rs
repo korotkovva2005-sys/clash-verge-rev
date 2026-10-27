@@ -3,6 +3,8 @@ use serde_yaml_ng::{Mapping, Value};
 const BUILTIN_POLICIES: &[&str] = &["DIRECT", "REJECT", "REJECT-DROP", "PASS", "PASS-RULE", "COMPATIBLE"];
 const LOGIC_RULES: &[&str] = &["AND", "OR", "NOT", "SUB-RULE", "MATCH"];
 
+const TELEGRAM_PROCESS_REGEX: &str = "^Telegram";
+
 const SERVICE_DOMAINS: &[&str] = &[
     // Gemini
     "gemini.google.com",
@@ -61,12 +63,24 @@ pub fn use_service_rules(mut config: Mapping) -> Mapping {
         return config;
     };
 
-    let existing: Vec<&str> = rules.iter().filter_map(|rule| rule.split(',').nth(1)).collect();
-    let mut merged: Vec<Value> = SERVICE_DOMAINS
-        .iter()
-        .filter(|domain| !existing.contains(domain))
-        .map(|domain| Value::from(format!("DOMAIN-SUFFIX,{domain},{target}")))
+    // The regex also covers macOS builds named "Telegram Desktop" or "Telegram Lite".
+    let rules: Vec<&str> = rules
+        .into_iter()
+        .filter(|rule| !rule.starts_with("PROCESS-NAME,Telegram,"))
         .collect();
+    let existing: Vec<&str> = rules.iter().filter_map(|rule| rule.split(',').nth(1)).collect();
+    let mut merged: Vec<Value> = Vec::new();
+    if !existing.contains(&TELEGRAM_PROCESS_REGEX) {
+        merged.push(Value::from(format!(
+            "PROCESS-NAME-REGEX,{TELEGRAM_PROCESS_REGEX},{target}"
+        )));
+    }
+    merged.extend(
+        SERVICE_DOMAINS
+            .iter()
+            .filter(|domain| !existing.contains(domain))
+            .map(|domain| Value::from(format!("DOMAIN-SUFFIX,{domain},{target}"))),
+    );
     merged.extend(rules.iter().map(|rule| Value::from(*rule)));
     config.insert("rules".into(), Value::Sequence(merged));
     config
