@@ -200,6 +200,7 @@ export interface TranslationResources {
             collapseNavBar: string
             expandNavBar: string
             lock: string
+            more: string
             reorderMode: string
             restoreDefaultOrder: string
             unlock: string
@@ -683,6 +684,9 @@ export interface TranslationResources {
           closeConnections: string
           disableAll: string
           enableAll: string
+        }
+        groups: {
+          other: string
         }
         provider: {
           actions: {

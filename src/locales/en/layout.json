@@ -3,8 +3,8 @@
     "navigation": {
       "tabs": {
         "home": "Home",
-        "proxies": "Proxies",
-        "profiles": "Profiles",
+        "proxies": "Servers",
+        "profiles": "Profile",
         "connections": "Connections",
         "rules": "Rules",
         "logs": "Logs",
@@ -17,7 +17,8 @@
         "unlock": "Unlock menu order",
         "lock": "Lock menu order",
         "collapseNavBar": "Collapse navigation bar",
-        "expandNavBar": "Expand navigation bar"
+        "expandNavBar": "Expand navigation bar",
+        "more": "More"
       }
     },
     "serviceMigration": {

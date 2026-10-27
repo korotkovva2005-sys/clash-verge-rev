@@ -4,6 +4,7 @@ pub mod field;
 mod merge;
 mod script;
 pub mod seq;
+mod service_rules;
 mod tun;
 
 use self::{
@@ -12,6 +13,7 @@ use self::{
     merge::use_merge,
     script::use_script,
     seq::{SeqMap, use_seq},
+    service_rules::use_service_rules,
     tun::use_tun,
 };
 use crate::config::dns::{DnsOverrideState, dns_override_source};
@@ -960,6 +962,7 @@ pub async fn enhance(
     notify_discarded_keys(authoritative.overridden(&authoritative, &authoritative.current(&config)));
     let config = authoritative.enforce(config);
     let config = ensure_lan_bind_address(config);
+    let config = use_service_rules(config);
 
     let config = cleanup_proxy_groups(config);
     let config = use_sort(config);

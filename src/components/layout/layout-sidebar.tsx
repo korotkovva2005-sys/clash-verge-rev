@@ -1,7 +1,21 @@
 import { DragDropProvider, KeyboardSensor, PointerSensor } from '@dnd-kit/react'
-import { Box, List, Menu, MenuItem, SvgIcon } from '@mui/material'
+import ExpandLessRounded from '@mui/icons-material/ExpandLessRounded'
+import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded'
+import {
+  Box,
+  Collapse,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  SvgIcon,
+} from '@mui/material'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 
 import iconDark from '@/assets/image/icon_dark.svg?react'
 import iconLight from '@/assets/image/icon_light.svg?react'
@@ -25,6 +39,8 @@ interface LayoutSidebarProps {
 
 const SENSORS = [PointerSensor, KeyboardSensor]
 
+const PRIMARY_PATHS = new Set(['/', '/proxies'])
+
 export const LayoutSidebar = (props: LayoutSidebarProps) => {
   const { isDark, isCollapsed } = props
   const { t } = useTranslation()
@@ -32,6 +48,8 @@ export const LayoutSidebar = (props: LayoutSidebarProps) => {
   const [menuUnlocked, setMenuUnlocked] = useState(false)
   const [menuContextPosition, setMenuContextPosition] =
     useState<MenuContextPosition | null>(null)
+  const { pathname } = useLocation()
+  const [moreOpen, setMoreOpen] = useState(() => !PRIMARY_PATHS.has(pathname))
 
   const handleMenuOrderOptimisticUpdate = useCallback(
     (order: string[]) => {
@@ -121,6 +139,42 @@ export const LayoutSidebar = (props: LayoutSidebarProps) => {
     )
   })
 
+  const primaryMenuItems = navMenuItems.filter((_, index) =>
+    PRIMARY_PATHS.has(menuOrder[index]),
+  )
+  const moreMenuItems = navMenuItems.filter(
+    (_, index) => !PRIMARY_PATHS.has(menuOrder[index]),
+  )
+  const moreLabel = t('layout.components.navigation.menu.more')
+
+  const moreToggle = (
+    <ListItem sx={{ maxWidth: 250, mx: 'auto', padding: '4px 0px' }}>
+      <ListItemButton
+        onClick={() => setMoreOpen((open) => !open)}
+        title={isCollapsed ? moreLabel : undefined}
+        aria-label={isCollapsed ? moreLabel : undefined}
+        aria-expanded={moreOpen}
+        sx={{
+          borderRadius: 2,
+          mx: 1.25,
+          px: 1,
+          '& .MuiListItemText-primary': {
+            color: 'text.secondary',
+            fontWeight: '700',
+          },
+        }}
+      >
+        <ListItemIcon sx={{ color: 'text.secondary', marginLeft: '6px' }}>
+          {moreOpen ? <ExpandLessRounded /> : <ExpandMoreRounded />}
+        </ListItemIcon>
+        <ListItemText
+          sx={{ textAlign: 'center', marginLeft: '-35px' }}
+          primary={moreLabel}
+        />
+      </ListItemButton>
+    </ListItem>
+  )
+
   return (
     <div className="layout-content__left">
       {/* Logo */}
@@ -136,11 +190,9 @@ export const LayoutSidebar = (props: LayoutSidebarProps) => {
           <SvgIcon
             component={isDark ? iconDark : iconLight}
             style={{
-              height: '36px',
-              width: '36px',
-              marginTop: '-3px',
-              marginRight: '5px',
-              marginLeft: '-3px',
+              height: '27px',
+              width: '62px',
+              marginRight: '8px',
             }}
             inheritViewBox
           />
@@ -175,9 +227,19 @@ export const LayoutSidebar = (props: LayoutSidebarProps) => {
 
       {/* Navigation menu */}
       <List className="the-menu" onContextMenu={handleMenuContextMenu}>
-        <DragDropProvider sensors={SENSORS} onDragEnd={handleMenuDragEnd}>
-          {navMenuItems}
-        </DragDropProvider>
+        {menuUnlocked ? (
+          <DragDropProvider sensors={SENSORS} onDragEnd={handleMenuDragEnd}>
+            {navMenuItems}
+          </DragDropProvider>
+        ) : (
+          <>
+            {primaryMenuItems}
+            {moreToggle}
+            <Collapse in={moreOpen} timeout="auto">
+              {moreMenuItems}
+            </Collapse>
+          </>
+        )}
       </List>
 
       {/* Context menu */}
