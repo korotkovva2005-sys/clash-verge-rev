@@ -12,7 +12,10 @@ use smartstring::alias::String;
 
 /// Imports the subscription baked in at build time once, and activates it on first import.
 pub async fn import_embedded_subscription() {
-    let Some(url) = option_env!("VOLODIA_SUBSCRIPTION_URL").map(str::trim).filter(|url| !url.is_empty()) else {
+    let Some(url) = option_env!("VOLODIA_SUBSCRIPTION_URL")
+        .map(str::trim)
+        .filter(|url| !url.is_empty())
+    else {
         return;
     };
     let find_uid = || async {
