@@ -136,11 +136,9 @@ export const LayoutSidebar = (props: LayoutSidebarProps) => {
           <SvgIcon
             component={isDark ? iconDark : iconLight}
             style={{
-              height: '36px',
-              width: '36px',
-              marginTop: '-3px',
-              marginRight: '5px',
-              marginLeft: '-3px',
+              height: '27px',
+              width: '62px',
+              marginRight: '8px',
             }}
             inheritViewBox
           />
