@@ -19,7 +19,8 @@ jobs:
       fail-fast: false
       matrix:
         target: [aarch64-apple-darwin, x86_64-apple-darwin]
-    runs-on: macos-latest
+    # macOS arm64 runners repeatedly failed to pick up jobs; Intel runners cross-compile both targets.
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v7
 
