@@ -3,8 +3,8 @@
     "navigation": {
       "tabs": {
         "home": "Главная",
-        "proxies": "Прокси",
-        "profiles": "Профили",
+        "proxies": "Сервера",
+        "profiles": "Профиль",
         "connections": "Соединения",
         "rules": "Правила",
         "logs": "Логи",
@@ -17,7 +17,8 @@
         "unlock": "Разблокировать порядок меню",
         "lock": "Заблокировать порядок меню",
         "collapseNavBar": "Свернуть панель навигации",
-        "expandNavBar": "Развернуть панель навигации"
+        "expandNavBar": "Развернуть панель навигации",
+        "more": "Ещё"
       }
     },
     "serviceMigration": {
