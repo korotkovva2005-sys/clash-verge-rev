@@ -5,15 +5,9 @@ use tokio::task::JoinSet;
 
 use clash_verge_logging::{Type, logging};
 
-mod bahamut;
-mod bilibili;
 mod chatgpt;
 mod claude;
-mod disney_plus;
 mod gemini;
-mod muse;
-mod netflix;
-mod prime_video;
 mod spotify;
 mod tiktok;
 mod types;
@@ -26,34 +20,20 @@ const MAX_CONCURRENT_CHECKS: usize = 4;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum UnlockCheck {
-    BilibiliChinaMainland,
-    BilibiliHkMcTw,
     ChatGptWeb,
     Claude,
     Gemini,
-    MuseAi,
     YouTubePremium,
-    BahamutAnime,
-    Netflix,
-    DisneyPlus,
-    PrimeVideo,
     Spotify,
     TikTok,
 }
 
 impl UnlockCheck {
     const ALL: &[Self] = &[
-        Self::BilibiliChinaMainland,
-        Self::BilibiliHkMcTw,
         Self::ChatGptWeb,
         Self::Claude,
         Self::Gemini,
-        Self::MuseAi,
         Self::YouTubePremium,
-        Self::BahamutAnime,
-        Self::Netflix,
-        Self::DisneyPlus,
-        Self::PrimeVideo,
         Self::Spotify,
         Self::TikTok,
     ];
@@ -64,17 +44,10 @@ impl UnlockCheck {
 
     const fn name(self) -> &'static str {
         match self {
-            Self::BilibiliChinaMainland => bilibili::BILIBILI_CHINA_MAINLAND_NAME,
-            Self::BilibiliHkMcTw => bilibili::BILIBILI_HK_MC_TW_NAME,
             Self::ChatGptWeb => chatgpt::CHATGPT_WEB_NAME,
             Self::Claude => claude::CLAUDE_NAME,
             Self::Gemini => gemini::GEMINI_NAME,
-            Self::MuseAi => muse::MUSE_AI_NAME,
             Self::YouTubePremium => youtube::YOUTUBE_PREMIUM_NAME,
-            Self::BahamutAnime => bahamut::BAHAMUT_ANIME_NAME,
-            Self::Netflix => netflix::NETFLIX_NAME,
-            Self::DisneyPlus => disney_plus::DISNEY_NAME,
-            Self::PrimeVideo => prime_video::PRIME_VIDEO_NAME,
             Self::Spotify => spotify::SPOTIFY_NAME,
             Self::TikTok => tiktok::TIKTOK_NAME,
         }
@@ -82,17 +55,10 @@ impl UnlockCheck {
 
     async fn check(self, client: &Client) -> UnlockItem {
         match self {
-            Self::BilibiliChinaMainland => bilibili::check_bilibili_china_mainland(client).await,
-            Self::BilibiliHkMcTw => bilibili::check_bilibili_hk_mc_tw(client).await,
             Self::ChatGptWeb => chatgpt::check_chatgpt(client).await,
             Self::Claude => claude::check_claude(client).await,
             Self::Gemini => gemini::check_gemini(client).await,
-            Self::MuseAi => muse::check_muse_ai(client).await,
             Self::YouTubePremium => youtube::check_youtube_premium(client).await,
-            Self::BahamutAnime => bahamut::check_bahamut_anime(client).await,
-            Self::Netflix => netflix::check_netflix(client).await,
-            Self::DisneyPlus => disney_plus::check_disney_plus(client).await,
-            Self::PrimeVideo => prime_video::check_prime_video(client).await,
             Self::Spotify => spotify::check_spotify(client).await,
             Self::TikTok => tiktok::check_tiktok(client).await,
         }
