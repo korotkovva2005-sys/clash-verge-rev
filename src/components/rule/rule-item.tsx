@@ -1,5 +1,7 @@
-import { styled, Box, Typography } from '@mui/material'
+import { styled, Box, Switch, Typography } from '@mui/material'
 import { Rule } from 'tauri-plugin-mihomo-api'
+
+import { isRuleDisabled } from './rule-state'
 
 const Item = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -17,6 +19,7 @@ const COLOR = [
 
 interface Props {
   value: Rule & { lineNo: number }
+  onToggle: (index: number, disabled: boolean) => void
 }
 
 const parseColor = (text: string) => {
@@ -31,10 +34,17 @@ const parseColor = (text: string) => {
 }
 
 const RuleItem = (props: Props) => {
-  const { value } = props
+  const { value, onToggle } = props
+  const disabled = isRuleDisabled(value)
 
   return (
-    <Item sx={{ borderBottom: '1px solid var(--divider-color)' }}>
+    <Item
+      sx={{
+        borderBottom: '1px solid var(--divider-color)',
+        alignItems: 'center',
+        opacity: disabled ? 0.5 : 1,
+      }}
+    >
       <Typography
         color="text.secondary"
         variant="body2"
@@ -43,7 +53,7 @@ const RuleItem = (props: Props) => {
         {value.lineNo}
       </Typography>
 
-      <Box sx={{ userSelect: 'text' }}>
+      <Box sx={{ userSelect: 'text', flex: 1, minWidth: 0 }}>
         <Typography component="h6" variant="subtitle1" color="text.primary">
           {value.payload || '-'}
         </Typography>
@@ -65,6 +75,12 @@ const RuleItem = (props: Props) => {
           {value.proxy}
         </Typography>
       </Box>
+
+      <Switch
+        size="small"
+        checked={!disabled}
+        onChange={(_, checked) => onToggle(value.index, !checked)}
+      />
     </Item>
   )
 }

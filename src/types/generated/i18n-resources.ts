@@ -679,6 +679,11 @@ export interface TranslationResources {
         }
       }
       page: {
+        actions: {
+          closeConnections: string
+          disableAll: string
+          enableAll: string
+        }
         provider: {
           actions: {
             update: string
@@ -1589,6 +1594,7 @@ export interface TranslationResources {
           noDisney: string
           originalsOnly: string
           pending: string
+          risky: string
           unsupportedRegion: string
           yes: string
         }

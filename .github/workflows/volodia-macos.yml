@@ -1,0 +1,62 @@
+name: Volodia macOS build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: short
+  HUSKY: 0
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [aarch64-apple-darwin, x86_64-apple-darwin]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@1.99.1
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: volodia-${{ matrix.target }}
+          workspaces: |
+            . -> target
+
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24.22.1'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: |
+          pnpm i
+          pnpm run prebuild ${{ matrix.target }}
+
+      - name: Build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          # Ad-hoc signature so the app launches on Apple Silicon without a developer certificate.
+          APPLE_SIGNING_IDENTITY: '-'
+          VOLODIA_SUBSCRIPTION_URL: ${{ secrets.VOLODIA_SUBSCRIPTION_URL }}
+        run: pnpm tauri build --target ${{ matrix.target }} -b dmg
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Volodia-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+          if-no-files-found: error

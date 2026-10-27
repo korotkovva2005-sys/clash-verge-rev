@@ -62,7 +62,7 @@ export const ProxyRender = memo(function ProxyRender(props: RenderProps) {
   const headerId = useId()
   const mode = useThemeMode()
   const isDark = mode === 'dark'
-  const itembackgroundcolor = isDark ? '#282A36' : '#ffffff'
+  const itembackgroundcolor = isDark ? '#2C2C2E' : '#ffffff'
   const iconCachePath = useIconCache({
     icon: group.icon,
     cacheKey: group.name.replaceAll(' ', ''),

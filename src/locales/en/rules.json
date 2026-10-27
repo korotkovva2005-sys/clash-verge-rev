@@ -8,6 +8,11 @@
         "update": "Update"
       }
     },
+    "actions": {
+      "enableAll": "Enable All",
+      "disableAll": "Disable All",
+      "closeConnections": "Close All Connections"
+    },
     "title": "Rules"
   },
   "feedback": {

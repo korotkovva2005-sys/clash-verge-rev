@@ -248,3 +248,26 @@ pub async fn get_clash_logs() -> CmdResult<Vec<std::string::String>> {
     let logs = CoreManager::global().get_clash_logs().await.unwrap_or_default();
     Ok(logs)
 }
+
+/// Toggles rules in the running core by index; mihomo resets the flags on config reload.
+#[tauri::command]
+#[specta::specta]
+pub async fn set_rules_disabled(rules: std::collections::HashMap<u32, bool>) -> CmdResult {
+    let body = serde_json::to_string(&rules).stringify_err()?;
+    let response = handle::Handle::mihomo()
+        .load_ctx()
+        .build_request(reqwest::Method::PATCH, "/rules/disable")
+        .stringify_err()?
+        .header(reqwest::header::CONTENT_TYPE, "application/json")
+        .body(body)
+        .send()
+        .await
+        .stringify_err()?;
+    if !response.status().is_success() {
+        return Err(CommandFailure::plain(format!(
+            "disable rules failed, status {}",
+            response.status()
+        )));
+    }
+    Ok(())
+}

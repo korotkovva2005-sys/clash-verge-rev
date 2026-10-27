@@ -35,6 +35,7 @@ pub fn builder() -> tauri_specta::Builder<tauri::Wry> {
             cmd::get_clash_info,
             cmd::patch_clash_config,
             cmd::patch_clash_mode,
+            cmd::set_rules_disabled,
             cmd::get_clash_mode,
             cmd::change_clash_core,
             cmd::get_runtime_config,

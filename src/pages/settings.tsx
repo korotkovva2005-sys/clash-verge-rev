@@ -80,7 +80,7 @@ const SettingPage = () => {
             sx={{
               borderRadius: 2,
               marginBottom: 1.5,
-              backgroundColor: isDark ? '#282a36' : '#ffffff',
+              backgroundColor: isDark ? '#2C2C2E' : '#ffffff',
             }}
           >
             <SettingSystem onError={onError} />
@@ -88,7 +88,7 @@ const SettingPage = () => {
           <Box
             sx={{
               borderRadius: 2,
-              backgroundColor: isDark ? '#282a36' : '#ffffff',
+              backgroundColor: isDark ? '#2C2C2E' : '#ffffff',
             }}
           >
             <SettingClash onError={onError} />
@@ -99,7 +99,7 @@ const SettingPage = () => {
             sx={{
               borderRadius: 2,
               marginBottom: 1.5,
-              backgroundColor: isDark ? '#282a36' : '#ffffff',
+              backgroundColor: isDark ? '#2C2C2E' : '#ffffff',
             }}
           >
             <SettingVergeBasic onError={onError} />
@@ -107,7 +107,7 @@ const SettingPage = () => {
           <Box
             sx={{
               borderRadius: 2,
-              backgroundColor: isDark ? '#282a36' : '#ffffff',
+              backgroundColor: isDark ? '#2C2C2E' : '#ffffff',
             }}
           >
             <SettingVergeAdvanced onError={onError} />

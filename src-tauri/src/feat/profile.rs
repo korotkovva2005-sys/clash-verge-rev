@@ -10,6 +10,35 @@ use anyhow::{Result, bail};
 use clash_verge_logging::{Type, logging, logging_error};
 use smartstring::alias::String;
 
+/// Imports the subscription baked in at build time once, and activates it on first import.
+pub async fn import_embedded_subscription() {
+    let Some(url) = option_env!("VOLODIA_SUBSCRIPTION_URL")
+        .map(str::trim)
+        .filter(|url| !url.is_empty())
+    else {
+        return;
+    };
+    let find_uid = || async {
+        Config::profiles()
+            .await
+            .data_arc()
+            .items
+            .as_ref()
+            .and_then(|items| items.iter().find(|item| item.url.as_deref() == Some(url)))
+            .and_then(|item| item.uid.clone())
+    };
+    if find_uid().await.is_some() {
+        return;
+    }
+    if let Err(err) = cmd::import_profile(url.into(), None).await {
+        logging!(error, Type::Config, "import embedded subscription failed: {err}");
+        return;
+    }
+    if let Some(uid) = find_uid().await {
+        toggle_proxy_profile(uid).await;
+    }
+}
+
 /// Toggle proxy profile
 pub async fn toggle_proxy_profile(profile_index: String) {
     if let Err(err) = cmd::patch_profiles_config_by_profile_index(profile_index.clone()).await {
