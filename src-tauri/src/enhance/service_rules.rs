@@ -43,6 +43,15 @@ const SERVICE_DOMAINS: &[&str] = &[
     "muscdn.com",
     "musical.ly",
     "ttwstatic.com",
+    // GitHub
+    "github.com",
+    "github.io",
+    "githubusercontent.com",
+    "githubassets.com",
+    "githubcopilot.com",
+    "ghcr.io",
+    "github.dev",
+    "githubapp.com",
     // Google
     "google.com",
     "googleapis.com",

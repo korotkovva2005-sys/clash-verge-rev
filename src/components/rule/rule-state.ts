@@ -47,6 +47,10 @@ const RULE_GROUPS: { name: string; keywords: string[] }[] = [
       'ttwstatic',
     ],
   },
+  {
+    name: 'GitHub',
+    keywords: ['github', 'ghcr.io'],
+  },
   { name: 'Google', keywords: ['google', 'gstatic', 'gvt1', 'gvt2'] },
 ]
 
