@@ -3,7 +3,7 @@ name: Volodia macOS build
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [dev]
 
 permissions:
   contents: read
