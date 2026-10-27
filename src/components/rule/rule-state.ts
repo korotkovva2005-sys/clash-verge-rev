@@ -20,16 +20,34 @@ const RULE_GROUPS: { name: string; keywords: string[] }[] = [
   { name: 'Claude', keywords: ['claude', 'anthropic'] },
   {
     name: 'Gemini',
-    keywords: ['gemini', 'bard.google', 'generativelanguage', 'aistudio'],
+    keywords: [
+      'gemini',
+      'bard.google',
+      'generativelanguage',
+      'aistudio',
+      'makersuite',
+      'notebooklm',
+      'proactivebackend',
+    ],
   },
   { name: 'Telegram', keywords: ['telegram', 't.me', 'tdesktop'] },
   {
     name: 'YouTube',
-    keywords: ['youtube', 'ytimg', 'googlevideo', 'youtu.be'],
+    keywords: ['youtube', 'ytimg', 'googlevideo', 'youtu.be', 'yt.be', 'ggpht'],
   },
-  { name: 'Spotify', keywords: ['spotify', 'scdn.co'] },
-  { name: 'TikTok', keywords: ['tiktok', 'byteoversea', 'musical.ly'] },
-  { name: 'Google', keywords: ['google', 'gstatic'] },
+  { name: 'Spotify', keywords: ['spotify', 'scdn.co', 'spoti.fi'] },
+  {
+    name: 'TikTok',
+    keywords: [
+      'tiktok',
+      'byteoversea',
+      'musical.ly',
+      'ibyte',
+      'muscdn',
+      'ttwstatic',
+    ],
+  },
+  { name: 'Google', keywords: ['google', 'gstatic', 'gvt1', 'gvt2'] },
 ]
 
 export const getRuleGroup = (rule: Rule) => {
