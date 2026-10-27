@@ -8,6 +8,11 @@
         "update": "Обновить"
       }
     },
+    "actions": {
+      "enableAll": "Включить все",
+      "disableAll": "Выключить все",
+      "closeConnections": "Закрыть все соединения"
+    },
     "title": "Правила"
   },
   "feedback": {

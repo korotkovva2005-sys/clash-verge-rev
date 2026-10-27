@@ -152,6 +152,10 @@ export async function patchClashMode(payload: string) {
   return commands.patchClashMode(payload)
 }
 
+export async function setRulesDisabled(rules: Record<number, boolean>) {
+  return commands.setRulesDisabled(rules)
+}
+
 export async function syncTrayProxySelection() {
   return commands.syncTrayProxySelection()
 }

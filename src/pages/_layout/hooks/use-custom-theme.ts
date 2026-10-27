@@ -221,7 +221,7 @@ export const useCustomTheme = () => {
       )
       rootEle.style.setProperty(
         '--scrollbar-bg',
-        mode === 'light' ? '#f1f1f1' : '#2E303D',
+        mode === 'light' ? '#f1f1f1' : '#1C1C1E',
       )
       rootEle.style.setProperty(
         '--scrollbar-thumb',
@@ -297,7 +297,7 @@ export const useCustomTheme = () => {
 
         /* 确保模态框和对话框也使用暗色主题 */
         .MuiDialog-paper {
-          background-color: ${mode === 'light' ? '#ffffff' : '#2E303D'} !important;
+          background-color: ${mode === 'light' ? '#ffffff' : '#1C1C1E'} !important;
         }
 
         /* 移除可能的白色点或线条 */

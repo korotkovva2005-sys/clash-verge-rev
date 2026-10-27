@@ -50,6 +50,9 @@ export const commands = {
     __TAURI_INVOKE<null>('patch_clash_config', { payload }),
   patchClashMode: (payload: string) =>
     __TAURI_INVOKE<null>('patch_clash_mode', { payload }),
+  /**  Toggles rules in the running core by index; mihomo resets the flags on config reload. */
+  setRulesDisabled: (rules: { [key in number]: boolean }) =>
+    __TAURI_INVOKE<null>('set_rules_disabled', { rules }),
   /**  Reads the saved mode without depending on strict mihomo `/configs` deserialization. */
   getClashMode: () => __TAURI_INVOKE<string | null>('get_clash_mode'),
   changeClashCore: (clashCore: string) =>

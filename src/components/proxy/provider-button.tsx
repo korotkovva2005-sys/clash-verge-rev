@@ -219,7 +219,7 @@ export const ProviderButton = () => {
                       transition: 'all 0.2s',
                     },
                     ({ palette: { mode, primary } }) => {
-                      const bgcolor = mode === 'light' ? '#ffffff' : '#24252f'
+                      const bgcolor = mode === 'light' ? '#ffffff' : '#262628'
                       const hoverColor =
                         mode === 'light'
                           ? alpha(primary.main, 0.1)

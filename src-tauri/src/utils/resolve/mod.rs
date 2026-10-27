@@ -92,6 +92,10 @@ async fn resolve_setup() {
         init_silent_updater(),
     );
 
+    AsyncHandler::spawn(|| async {
+        feat::import_embedded_subscription().await;
+    });
+
     Handle::refresh_clash();
     refresh_tray_menu().await;
     resolve_done();

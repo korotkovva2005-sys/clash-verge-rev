@@ -93,7 +93,7 @@ const Layout = () => {
         style={{
           width: '100vw',
           height: '100vh',
-          background: mode === 'light' ? '#fff' : '#181a1b',
+          background: mode === 'light' ? '#fff' : '#111112',
           transition: 'background 0.2s',
           display: 'flex',
           alignItems: 'center',
